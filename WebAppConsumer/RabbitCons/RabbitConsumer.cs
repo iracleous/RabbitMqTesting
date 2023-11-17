@@ -21,7 +21,9 @@ public class RabbitConsumer : IRabbitConsumer
         //Here we create channel with session and model
         using var channel = connection.CreateModel();
         //declare the queue after mentioning name and a few property related to that
-        channel.QueueDeclare("product", exclusive: false);
+        channel.QueueDeclare("product2", exclusive: false,
+                     autoDelete: false,
+                     arguments: null);
         //Set Event object which listen message from chanel which is sent by producer
 
         var consumer = new EventingBasicConsumer(channel);
@@ -33,7 +35,7 @@ public class RabbitConsumer : IRabbitConsumer
             if (product != null) products.Add(product);
         };
         //read the message // not necessary
-         channel.BasicConsume(queue: "product", autoAck: true, consumer: consumer);
+         channel.BasicConsume(queue: "product2", autoAck: true, consumer: consumer);
         return products;
 
     }

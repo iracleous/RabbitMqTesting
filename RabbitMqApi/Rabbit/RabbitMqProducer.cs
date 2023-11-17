@@ -16,8 +16,8 @@ public class RabbitMqProducer : IRabbitMqProducer
         //Here we create channel with session and model
         using var channel = connection.CreateModel();
         //declare the queue after mentioning name and a few property related to that
-        channel.QueueDeclare(queue: "product",
-                     durable: true,
+        channel.QueueDeclare(queue: "product2",
+                  //   durable: true,
                      exclusive: false,
                      autoDelete: false,
                      arguments: null);
@@ -27,6 +27,6 @@ public class RabbitMqProducer : IRabbitMqProducer
         var json = JsonConvert.SerializeObject(message);
         var body = Encoding.UTF8.GetBytes(json);
         //put the data on to the product queue
-        channel.BasicPublish(exchange: "", routingKey: "product", body: body);
+        channel.BasicPublish(exchange: string.Empty, routingKey: "product2", body: body);
     }
 }
