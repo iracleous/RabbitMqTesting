@@ -18,8 +18,7 @@ public class RabbitConsumer : IRabbitConsumer
     {
         var products = new List<Product>();
 
-        int processedMessageCount = 0;
-        int expectedMessageCount = 1;
+        
 
         //Here we specify the Rabbit MQ Server. we use rabbitmq docker image and use it
         var factory = new ConnectionFactory { HostName = "localhost" };
@@ -45,18 +44,9 @@ public class RabbitConsumer : IRabbitConsumer
             Product? product = JsonConvert.DeserializeObject<Product>(message);
             if (product != null) products.Add(product);
 
-            // Increment the processed message count
-            processedMessageCount++;
-
             // Check if all expected messages are processed then Signal that message processing is complete
-            if (processedMessageCount == expectedMessageCount)
-            {
                 messageProcessingComplete.Set();
-            }
-
-
-
-        };
+         };
         channel.BasicConsume(queue: "product2", autoAck: true, consumer: consumer);
 
         // waits to process thw queu but with timeout if the queue is empty
@@ -68,8 +58,4 @@ public class RabbitConsumer : IRabbitConsumer
 
         return products;
     }
-
-   
-
-
 }
