@@ -20,6 +20,8 @@ channel.QueueDeclare("product2",
                      autoDelete: false
     );
 
+ 
+
 //Set Event object which listen message from chanel which is sent by producer
 var consumer = new EventingBasicConsumer(channel);
 consumer.Received += (model, eventArgs) => {
@@ -28,7 +30,11 @@ consumer.Received += (model, eventArgs) => {
     Console.WriteLine($"Product message received: {message}");
     Product ?product = JsonConvert.DeserializeObject<Product>(message);
     Console.WriteLine(product?.ProductName );
+
+   
 };
 //read the message
  channel.BasicConsume(queue: "product2", autoAck: true, consumer: consumer);
-Console.ReadKey();
+//Console.ReadKey();
+
+

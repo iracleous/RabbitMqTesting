@@ -8,6 +8,6 @@ namespace WebAppConsumer.RabbitCons;
 
 public interface IRabbitConsumer
 {
-    public List<Product> ReadProductsFromQueue();
+    public List<Product> ReadProductsFromQueue( );
 }
 
